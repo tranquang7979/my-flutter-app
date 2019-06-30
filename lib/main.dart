@@ -5,7 +5,11 @@ import 'package:flutter/material.dart';
 //void main() => runApp(MyApp());
 
 //--- NAVIGATION
-import './src/navigator/ui-navigator.dart';
-void main() => runApp(MyNavigator());
+//import './src/navigator/ui-navigator.dart';
+//void main() => runApp(MyNavigator());
 //import './src/navigator/sample.dart';
 //void main() => runApp(NavigatorSample());
+
+//--- SIDE MENU
+import './src/side-menu/side-menu.dart';
+void main() => runApp(MySideMenu());

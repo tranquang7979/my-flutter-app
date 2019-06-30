@@ -86,9 +86,8 @@ class MyAppHomeState extends State {
   PopupMenuButton<WhyFarther> _popupMenu() {
     return PopupMenuButton<WhyFarther>(
       onSelected: (WhyFarther result) {
-        setState(() {
-          _showDialog(result._name);
-        });
+        //_showDialog(result._name);
+        _showDialog(result);
       },
       itemBuilder: (BuildContext context) => <PopupMenuEntry<WhyFarther>>[
             const PopupMenuItem<WhyFarther>(
