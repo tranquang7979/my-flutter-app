@@ -1,13 +1,17 @@
 //https://www.youtube.com/watch?v=kVi7taaaUVM
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:myapp/src/screen-home/screen-home.dart';
+import 'package:myapp/src/shopping/ShoppingList.dart';
+import 'package:myapp/src/shopping/ShoppingListItem.dart';
+import 'package:myapp/src/side-menu/menu-item.dart';
 
 class MySideMenu extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My Navigator',
+      title: 'Steven\'s App',
       theme: ThemeData(
         primaryColor: Colors.green,
       ),
@@ -22,12 +26,41 @@ class MyAppHome extends StatefulWidget {
 }
 
 class MyAppHomeState extends State {
+  AppBar _appBar = AppBar(title: Text('Steven App 1'));
+  Widget _body = Home();
+  BuildContext _context = null;
+
+  void _handleMenuItem_OnTap(String screenId) {
+    setState(() {
+      switch (screenId) {
+        case 'HOME_SCREEN':
+          _appBar = AppBar(
+            title: Text('Home Screen'),
+          );
+          _body = Home();
+          break;
+        case 'LIST_SCREEN':
+          _appBar = AppBar(
+            title: Text('List Screen'),
+          );
+          _body = ShoppingList(
+            products: <Product>[
+              Product(name: 'Eggs'),
+              Product(name: 'Flour'),
+              Product(name: 'Chocolate chips'),
+            ],
+          );
+          break;
+      }
+      Navigator.of(_context).pop();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _context = context;
     return Scaffold(
-        appBar: AppBar(
-          title: Text('SideMenu Demo'),
-        ),
+        appBar: _appBar,
         drawer: Drawer(
           child: Column(
             children: <Widget>[
@@ -52,10 +85,12 @@ class MyAppHomeState extends State {
                                   actions: <Widget>[
                                     IconButton(
                                         icon: Icon(Icons.list),
-                                        onPressed: () => Navigator.pop(context) ),
+                                        onPressed: () =>
+                                            Navigator.pop(context)),
                                     IconButton(
                                         icon: Icon(Icons.arrow_forward),
-                                        onPressed: () => Navigator.pop(context) ),
+                                        onPressed: () =>
+                                            Navigator.pop(context)),
                                   ],
                                   content: Text("This is content"),
                                   title: Text("Adding new account..."));
@@ -67,12 +102,12 @@ class MyAppHomeState extends State {
               Padding(
                 padding: EdgeInsets.only(top: 20),
               ),
-              ListTile(
-                  leading: Icon(FontAwesomeIcons.inbox), title: Text("Inbox"),
-                  trailing: Chip(
-                    label: Text("8", style: TextStyle(fontWeight: FontWeight.bold)),
-                    backgroundColor: Colors.blue[100]
-                  )),
+              MenuItem(
+                  screenId: 'HOME_SCREEN',
+                  onTapCallback: _handleMenuItem_OnTap),
+              MenuItem(
+                  screenId: 'LIST_SCREEN',
+                  onTapCallback: _handleMenuItem_OnTap),
               ListTile(
                   leading: Icon(FontAwesomeIcons.edit), title: Text("Draft")),
               ListTile(
@@ -94,6 +129,6 @@ class MyAppHomeState extends State {
             ],
           ),
         ),
-        body: Text('I am SideMenu'));
+        body: _body);
   }
 }
